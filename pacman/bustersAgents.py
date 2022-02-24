@@ -260,7 +260,7 @@ class BasicAgentAA(BustersAgent):
         print "Score: ", gameState.getScore()
         
         
-    def chooseAction(self, gameState):
+    def chooseAction_old(self, gameState):
         self.countActions = self.countActions + 1
         self.printInfo(gameState)
         move = Directions.STOP
@@ -271,6 +271,54 @@ class BasicAgentAA(BustersAgent):
         if   ( move_random == 2 ) and Directions.NORTH in legal:   move = Directions.NORTH
         if   ( move_random == 3 ) and Directions.SOUTH in legal: move = Directions.SOUTH
         return move
+
+    def chooseAction(self, gameState):
+        self.countActions = self.countActions + 1
+        self.printInfo(gameState)
+        move = Directions.STOP
+        legal = gameState.getLegalActions(0) ##Legal position from the pacman
+
+        position = self.closer_ghost(gameState)
+        x = position[0]
+        y = position[1]
+
+
+        move = self.evaluar_x(x,legal)
+
+        if move == -1:
+            move = self.evaluar_y(y,legal)
+        if move == -1:
+            
+
+
+
+        return move
+
+
+    def evaluar_x(self,x,legal):
+        if x == 0:
+            move = -1
+        if x > 0:
+            if   Directions.EAST in legal: move = Directions.EAST
+            move = -1
+        if x < 0:
+            if   Directions.WEST in legal:  move = Directions.WEST
+            move = -1
+        return move
+
+
+    def evaluar_x(self,y,legal):
+        if y == 0:
+            move = -1
+        if y > 0:
+            if   Directions.NORTH in legal:   move = Directions.NORTH
+            move = -1
+        if y < 0:
+            if   Directions.SOUTH in legal: move = Directions.SOUTH
+            move = -1
+        return move
+
+
 
 
     ##### Codigo extra - Funcion extra #####
@@ -295,10 +343,24 @@ class BasicAgentAA(BustersAgent):
 
     # Guardamos en un fichero la informacion que consideramos importante.
     def printLineData(self, gameState, fichero):
-        # Definimos la lista con los datos.
-        data = (gameState.getPacmanPosition(), gameState.getGhostPositions(), self.closer_ghost(gameState))
+        data = ""
+        # Definimos los datos que vamos a guardar.
+        data += str(gameState.getPacmanPosition()[0]) # PacMan x
+        data += ", " + str(gameState.getPacmanPosition()[1]) # PacMan y
+
+        data += ", " + str(len(gameState.getGhostPositions())) # Numero de fantasmas
+ 
+        for f in gameState.getGhostPositions():
+
+            data += ", " + str(f[0]) # Fantasma x
+            data += ", " + str(f[1]) # Fantasma y
+
+        for i in range(1,len(gameState.getLivingGhosts())):
+            data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo.
+
+        data += ", " + str(self.closer_ghost(gameState)[0]) # Fantasma mais cercano x   
+        data += ", " + str(self.closer_ghost(gameState)[1]) # Fantasma mais cercano y
+
         # escribimos los datos en fichero.
-        fichero.write('\n' + str(data))
+        fichero.write(str(data) + "\n")
         
-
-
