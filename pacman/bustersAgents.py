@@ -279,43 +279,48 @@ class BasicAgentAA(BustersAgent):
         legal = gameState.getLegalActions(0) ##Legal position from the pacman
 
         position = self.closer_ghost(gameState)
+        print("posicion fantasma",position)
         x = position[0]
         y = position[1]
 
-
         move = self.evaluar_x(x,legal)
-
         if move == -1:
             move = self.evaluar_y(y,legal)
         if move == -1:
-            
+            dirs = [Directions.WEST,Directions.EAST,Directions.NORTH,Directions.SOUTH]
+            self.bloqueado = True
+            while (move==-1):
+                rand = random.randint(0, 3)
+                if dirs[rand] in legal:
+                    move = dirs[rand]
 
-
-
+        print("Movimiento:",move)
         return move
 
 
     def evaluar_x(self,x,legal):
+        print("distancia x:",x)
         if x == 0:
             move = -1
         if x > 0:
             if   Directions.EAST in legal: move = Directions.EAST
-            move = -1
+            else: move = -1
         if x < 0:
             if   Directions.WEST in legal:  move = Directions.WEST
-            move = -1
+            else: move = -1
         return move
 
 
-    def evaluar_x(self,y,legal):
+    def evaluar_y(self,y,legal):
+        print("distancia y:",y)
         if y == 0:
             move = -1
         if y > 0:
             if   Directions.NORTH in legal:   move = Directions.NORTH
-            move = -1
+            else: move = -1
         if y < 0:
             if   Directions.SOUTH in legal: move = Directions.SOUTH
-            move = -1
+            else: move = -1
         return move
 
 
@@ -328,7 +333,8 @@ class BasicAgentAA(BustersAgent):
         # Obtenemos las distancias de los fantasmas.
         ghost_dist = gameState.data.ghostDistances
         # Miramos cual es el fantasma mas cercano.
-        closer_ghost_dist = min(ghost_dist)
+        dists = [d for d,l in zip(ghost_dist,gameState.getLivingGhosts()[1:]) if l]
+        closer_ghost_dist = min(dists)
         closer_ghost = ghost_dist.index(closer_ghost_dist)
         # Nos quedamos con la posicion del fantasma mas cercano.
         closer_ghost_pos = gameState.getGhostPositions()[closer_ghost]
