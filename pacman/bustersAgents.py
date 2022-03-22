@@ -103,6 +103,77 @@ class BustersAgent:
         "By default, a BustersAgent just stops.  This should be overridden."
         return Directions.STOP
 
+
+    ##### Codigo extra - Funcion extra #####
+
+    # Posicion relativa del fantasma mas cer
+    def closer_ghost(self,gameState):
+        # Obtenemos las distancias de los fantasmas.
+        ghost_dist = gameState.data.ghostDistances
+        # Miramos cual es el fantasma mas cercano.
+        dists = [d for d,l in zip(ghost_dist,gameState.getLivingGhosts()[1:]) if l]
+        closer_ghost_dist = min(dists)
+        closer_ghost = ghost_dist.index(closer_ghost_dist)
+        # Nos quedamos con la posicion del fantasma mas cercano.
+        closer_ghost_pos = gameState.getGhostPositions()[closer_ghost]
+
+        # Obtenemos la posicion de pacman.
+        pacman_pos = gameState.getPacmanPosition()
+
+        # Posicion del fantasma respecto a pacman.
+        pos = (closer_ghost_pos[0] - pacman_pos[0], closer_ghost_pos[1] - pacman_pos[1])
+
+        return pos
+
+
+    # Guardamos en un fichero la informacion que consideramos importante.
+    def printLineData(self, gameState, fichero, cabeceras):
+
+        if not cabeceras:
+            fichero.write("@relation pacman.tuto4\n")
+            fichero.write("\n@attribute pacman_x numeric")
+            fichero.write("\n@attribute pacman_y numeric")
+            fichero.write("\n@attribute num_fantasmas numeric")
+
+            for i in range(1,len(gameState.getLivingGhosts())):
+                # Usamos getLivingGhosts() para saber la cantidad de fantasmas.
+                fichero.write("\n@attribute fantasma" + str(i) + "_x numeric")
+                fichero.write("\n@attribute fantasma" + str(i) + "_y numeric")
+
+            for i in range(1,len(gameState.getLivingGhosts())):
+                fichero.write("\n@attribute fantasma" + str(i) + "_vivo {True,False}")
+
+            fichero.write("\n@attribute fantasma_cercano_x numeric")
+            fichero.write("\n@attribute fantasma_cercano_y numeric")
+            fichero.write("\n@attribute direccion_pacman {West, Stop, East, North, South}\n")
+
+            fichero.write("\n@data\n")
+
+
+        data = ""
+        # Definimos los datos que vamos a guardar.
+        data += str(gameState.getPacmanPosition()[0]) # PacMan x
+        data += ", " + str(gameState.getPacmanPosition()[1]) # PacMan y
+
+        data += ", " + str(len(gameState.getGhostPositions())) # Numero de fantasmas
+ 
+        for f in gameState.getGhostPositions():
+
+            
+            data += ", " + str(f[0]) # Fantasma x
+            data += ", " + str(f[1]) # Fantasma y
+
+        for i in range(1,len(gameState.getLivingGhosts())):
+            data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo.
+
+        data += ", " + str(self.closer_ghost(gameState)[0]) # Fantasma mais cercano x   
+        data += ", " + str(self.closer_ghost(gameState)[1]) # Fantasma mais cercano y
+        data += ", " + str(gameState.data.agentStates[0].getDirection()) # Direccion que toma pacman
+
+        # escribimos los datos en fichero.
+        fichero.write(str(data) + "\n")
+
+
 class BustersKeyboardAgent(BustersAgent, KeyboardAgent):
     "An agent controlled by the keyboard that displays beliefs about ghost positions."
 
@@ -322,51 +393,3 @@ class BasicAgentAA(BustersAgent):
             if   Directions.SOUTH in legal: move = Directions.SOUTH
             else: move = -1
         return move
-
-
-
-
-    ##### Codigo extra - Funcion extra #####
-
-    # Posicion relativa del fantasma mas cer
-    def closer_ghost(self,gameState):
-        # Obtenemos las distancias de los fantasmas.
-        ghost_dist = gameState.data.ghostDistances
-        # Miramos cual es el fantasma mas cercano.
-        dists = [d for d,l in zip(ghost_dist,gameState.getLivingGhosts()[1:]) if l]
-        closer_ghost_dist = min(dists)
-        closer_ghost = ghost_dist.index(closer_ghost_dist)
-        # Nos quedamos con la posicion del fantasma mas cercano.
-        closer_ghost_pos = gameState.getGhostPositions()[closer_ghost]
-
-        # Obtenemos la posicion de pacman.
-        pacman_pos = gameState.getPacmanPosition()
-
-        # Posicion del fantasma respecto a pacman.
-        pos = (closer_ghost_pos[0] - pacman_pos[0], closer_ghost_pos[1] - pacman_pos[1])
-
-        return pos
-
-    # Guardamos en un fichero la informacion que consideramos importante.
-    def printLineData(self, gameState, fichero):
-        data = ""
-        # Definimos los datos que vamos a guardar.
-        data += str(gameState.getPacmanPosition()[0]) # PacMan x
-        data += ", " + str(gameState.getPacmanPosition()[1]) # PacMan y
-
-        data += ", " + str(len(gameState.getGhostPositions())) # Numero de fantasmas
- 
-        for f in gameState.getGhostPositions():
-
-            data += ", " + str(f[0]) # Fantasma x
-            data += ", " + str(f[1]) # Fantasma y
-
-        for i in range(1,len(gameState.getLivingGhosts())):
-            data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo.
-
-        data += ", " + str(self.closer_ghost(gameState)[0]) # Fantasma mais cercano x   
-        data += ", " + str(self.closer_ghost(gameState)[1]) # Fantasma mais cercano y
-
-        # escribimos los datos en fichero.
-        fichero.write(str(data) + "\n")
-        

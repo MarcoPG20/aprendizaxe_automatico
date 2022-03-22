@@ -23,6 +23,7 @@ from util import *
 import time, os
 import traceback
 import sys
+import os.path
 
 #######################
 # Parts worth reading #
@@ -607,12 +608,18 @@ class Game:
                 ## TODO: could this exceed the total time
                 self.unmute()
 
+
         agentIndex = self.startingIndex
         numAgents = len( self.agents )
         step = 0
 
         # Abrimos el fichero en el que guardamos los datos importantes.
-        fichero = open('ejercicio5.txt','a')
+
+        nom_fichero = 'all_data_pacman.arff'
+        cabeceras = os.path.isfile(nom_fichero)
+
+        fichero = open(nom_fichero,'a')
+
     
         while not self.gameOver:
             # Fetch the next agent
@@ -694,8 +701,8 @@ class Game:
             if agentIndex==0:
 
                 # Llamamos a nuestra funcion printLineData.
-                agent.printLineData(observation, fichero)
-
+                agent.printLineData(observation, fichero, cabeceras)
+                cabeceras = True
 
             # Execute the action
             self.moveHistory.append( (agentIndex, action) )
