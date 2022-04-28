@@ -615,11 +615,12 @@ class Game:
 
         # Abrimos el fichero en el que guardamos los datos importantes.
 
-        nom_fichero = 'all_data_pacman.arff'
+        nom_fichero = 'training_keyboard.arff'
         cabeceras = os.path.isfile(nom_fichero)
 
         fichero = open(nom_fichero,'a')
-
+        
+        puntuacion_anterior = 0 # Practica 1
     
         while not self.gameOver:
             # Fetch the next agent
@@ -701,7 +702,8 @@ class Game:
             if agentIndex==0:
 
                 # Llamamos a nuestra funcion printLineData.
-                agent.printLineData(observation, fichero, cabeceras)
+                agent.printLineData(observation, fichero, cabeceras, puntuacion_anterior)
+                puntuacion_anterior = observation.getScore()
                 cabeceras = True
 
             # Execute the action

@@ -127,10 +127,11 @@ class BustersAgent:
 
 
     # Guardamos en un fichero la informacion que consideramos importante.
-    def printLineData(self, gameState, fichero, cabeceras):
-
+    def printLineData(self, gameState, fichero, cabeceras, puntuacion_anterior):
+        
         if not cabeceras:
-            fichero.write("@relation pacman.tuto4\n")
+
+            fichero.write("@relation pacman.pract1\n")
             fichero.write("\n@attribute pacman_x numeric")
             fichero.write("\n@attribute pacman_y numeric")
             fichero.write("\n@attribute num_fantasmas numeric")
@@ -145,10 +146,14 @@ class BustersAgent:
 
             fichero.write("\n@attribute fantasma_cercano_x numeric")
             fichero.write("\n@attribute fantasma_cercano_y numeric")
+            # Anadido en la practica 1
+            fichero.write("\n@attribute dif_puntuacion numeric")
             fichero.write("\n@attribute direccion_pacman {West, Stop, East, North, South}\n")
 
             fichero.write("\n@data\n")
 
+        
+        dif_puntuacion = int(gameState.getScore()) - int(puntuacion_anterior)
 
         data = ""
         # Definimos los datos que vamos a guardar.
@@ -164,10 +169,13 @@ class BustersAgent:
             data += ", " + str(f[1]) # Fantasma y
 
         for i in range(1,len(gameState.getLivingGhosts())):
-            data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo.
+            data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo
 
         data += ", " + str(self.closer_ghost(gameState)[0]) # Fantasma mais cercano x   
         data += ", " + str(self.closer_ghost(gameState)[1]) # Fantasma mais cercano y
+
+        data += ", " + str(dif_puntuacion) # Diferencia de puntacion entre el tick actual y pasado
+
         data += ", " + str(gameState.data.agentStates[0].getDirection()) # Direccion que toma pacman
 
         # escribimos los datos en fichero.
