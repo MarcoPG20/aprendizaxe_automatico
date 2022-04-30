@@ -615,7 +615,7 @@ class Game:
 
         # Abrimos el fichero en el que guardamos los datos importantes.
 
-        nom_fichero = 'training_keyboard.arff'
+        nom_fichero = 'arff/test_other_maps_keyboard2.arff'
         cabeceras = os.path.isfile(nom_fichero)
 
         fichero = open(nom_fichero,'a')

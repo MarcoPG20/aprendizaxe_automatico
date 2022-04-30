@@ -1,0 +1,218 @@
+@relation pacman.pract1
+
+@attribute pacman_x numeric
+@attribute pacman_y numeric
+@attribute num_fantasmas numeric
+@attribute fantasma1_x numeric
+@attribute fantasma1_y numeric
+@attribute fantasma2_x numeric
+@attribute fantasma2_y numeric
+@attribute fantasma3_x numeric
+@attribute fantasma3_y numeric
+@attribute fantasma4_x numeric
+@attribute fantasma4_y numeric
+@attribute fantasma1_vivo {True,False}
+@attribute fantasma2_vivo {True,False}
+@attribute fantasma3_vivo {True,False}
+@attribute fantasma4_vivo {True,False}
+@attribute fantasma_cercano_x numeric
+@attribute fantasma_cercano_y numeric
+@attribute dif_puntuacion numeric
+@attribute direccion_pacman {West, Stop, East, North, South}
+
+@data
+12, 9, 4, 4, 12, 5, 5, 13, 11, 17, 4, True, True, True, True, 1, 2, 0, Stop
+12, 9, 4, 4, 12, 5, 6, 14, 11, 17, 4, True, True, True, True, 2, 2, -1, Stop
+12, 9, 4, 5, 12, 6, 6, 14, 12, 17, 3, True, True, True, True, 2, 3, -1, Stop
+12, 9, 4, 5, 11, 6, 5, 14, 12, 17, 4, True, True, True, True, 2, 3, -1, Stop
+13, 9, 4, 6, 11, 5, 5, 14, 12, 16, 4, True, True, True, True, 1, 3, -1, East
+14, 9, 4, 6, 12, 5, 5, 14, 11, 17, 4, True, True, True, True, 0, 2, -1, East
+14, 9, 4, 6, 11, 6, 5, 14, 10, 17, 4, True, True, True, True, 0, 1, -1, East
+14, 9, 4, 6, 10, 5, 5, 13, 10, 17, 3, True, True, True, True, -1, 1, -1, East
+13, 9, 4, 6, 11, 5, 5, 13, 10, 17, 3, True, True, True, True, 0, 1, -1, West
+13, 10, 4, 6, 11, 5, 6, 5, 1, 17, 4, True, True, False, True, -7, 1, 199, North
+13, 11, 4, 7, 11, 6, 6, 5, 1, 16, 4, True, True, False, True, -6, 0, -1, North
+13, 12, 4, 7, 11, 7, 6, 5, 1, 16, 3, True, True, False, True, -6, -1, -1, North
+13, 13, 4, 7, 10, 7, 6, 5, 1, 17, 3, True, True, False, True, -6, -3, -1, North
+12, 13, 4, 6, 10, 7, 5, 5, 1, 16, 3, True, True, False, True, -6, -3, -1, West
+11, 13, 4, 7, 10, 7, 5, 5, 1, 16, 3, True, True, False, True, -4, -3, -1, West
+11, 12, 4, 7, 9, 7, 5, 5, 1, 17, 3, True, True, False, True, -4, -3, -1, South
+11, 11, 4, 6, 9, 6, 5, 5, 1, 16, 3, True, True, False, True, -5, -2, -1, South
+11, 10, 4, 5, 9, 7, 5, 5, 1, 17, 3, True, True, False, True, -6, -1, -1, South
+11, 9, 4, 5, 9, 6, 5, 5, 1, 17, 4, True, True, False, True, -6, 0, -1, South
+11, 8, 4, 5, 10, 5, 5, 5, 1, 16, 4, True, True, False, True, -6, 2, -1, South
+10, 8, 4, 5, 9, 5, 6, 5, 1, 15, 4, True, True, False, True, -5, 1, -1, West
+9, 8, 4, 6, 9, 5, 5, 5, 1, 15, 3, True, True, False, True, -3, 1, -1, West
+8, 8, 4, 5, 9, 6, 5, 5, 1, 16, 3, True, True, False, True, -3, 1, -1, West
+7, 8, 4, 5, 8, 6, 5, 5, 1, 17, 3, True, True, False, True, -2, 0, -1, West
+6, 8, 4, 1, 1, 5, 5, 5, 1, 17, 3, False, True, False, True, -1, -3, 199, West
+6, 9, 4, 1, 1, 5, 6, 5, 1, 17, 4, False, True, False, True, -1, -3, -1, North
+6, 10, 4, 1, 1, 5, 6, 5, 1, 17, 4, False, True, False, True, -1, -4, -1, North
+6, 11, 4, 1, 1, 5, 6, 5, 1, 17, 3, False, True, False, True, -1, -5, -1, North
+5, 11, 4, 1, 1, 5, 6, 5, 1, 18, 3, False, True, False, True, 0, -5, -1, West
+5, 10, 4, 1, 1, 6, 6, 5, 1, 18, 4, False, True, False, True, 1, -4, -1, South
+5, 9, 4, 1, 1, 6, 5, 5, 1, 18, 3, False, True, False, True, 1, -4, -1, South
+5, 8, 4, 1, 1, 6, 5, 5, 1, 17, 3, False, True, False, True, 1, -3, -1, South
+5, 7, 4, 1, 1, 5, 5, 5, 1, 18, 3, False, True, False, True, 0, -2, -1, South
+5, 6, 4, 1, 1, 5, 5, 5, 1, 17, 3, False, True, False, True, 0, -1, -1, South
+5, 5, 4, 1, 1, 3, 1, 5, 1, 16, 3, False, False, False, True, 11, -2, 199, South
+6, 5, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 9, -2, -1, East
+7, 5, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 8, -2, -1, East
+7, 5, 4, 1, 1, 3, 1, 5, 1, 16, 3, False, False, False, True, 9, -2, -1, East
+7, 6, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 8, -3, -1, North
+7, 7, 4, 1, 1, 3, 1, 5, 1, 15, 4, False, False, False, True, 8, -3, -1, North
+7, 8, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 8, -5, -1, North
+8, 8, 4, 1, 1, 3, 1, 5, 1, 16, 3, False, False, False, True, 8, -5, -1, East
+9, 8, 4, 1, 1, 3, 1, 5, 1, 16, 3, False, False, False, True, 7, -5, -1, East
+10, 8, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 5, -5, -1, East
+11, 8, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 4, -5, -1, East
+12, 8, 4, 1, 1, 3, 1, 5, 1, 15, 3, False, False, False, True, 3, -5, -1, East
+13, 8, 4, 1, 1, 3, 1, 5, 1, 15, 4, False, False, False, True, 2, -4, -1, East
+13, 7, 4, 1, 1, 3, 1, 5, 1, 14, 4, False, False, False, True, 1, -3, -1, South
+13, 6, 4, 1, 1, 3, 1, 5, 1, 13, 4, False, False, False, True, 0, -2, -1, South
+14, 6, 4, 1, 1, 3, 1, 5, 1, 13, 3, False, False, False, True, -1, -3, -1, East
+15, 6, 4, 1, 1, 3, 1, 5, 1, 14, 3, False, False, False, True, -1, -3, -1, East
+16, 6, 4, 1, 1, 3, 1, 5, 1, 14, 3, False, False, False, True, -2, -3, -1, East
+15, 6, 4, 1, 1, 3, 1, 5, 1, 14, 4, False, False, False, True, -1, -2, -1, West
+14, 6, 4, 1, 1, 3, 1, 5, 1, 13, 4, False, False, False, True, -1, -2, -1, West
+13, 6, 4, 1, 1, 3, 1, 5, 1, 13, 5, False, False, False, True, 0, -1, -1, West
+13, 5, 4, 1, 1, 3, 1, 5, 1, 12, 5, False, False, False, True, -1, 0, -1, South
+13, 4, 4, 1, 1, 3, 1, 5, 1, 11, 5, False, False, False, True, -2, 1, -1, South
+13, 3, 4, 1, 1, 3, 1, 5, 1, 10, 5, False, False, False, True, -3, 2, -1, South
+13, 3, 4, 1, 1, 3, 1, 5, 1, 10, 5, False, False, False, True, -3, 2, -1, South
+13, 3, 4, 1, 1, 3, 1, 5, 1, 10, 6, False, False, False, True, -3, 3, -1, South
+13, 3, 4, 1, 1, 3, 1, 5, 1, 9, 6, False, False, False, True, -4, 3, -1, South
+13, 4, 4, 1, 1, 3, 1, 5, 1, 10, 6, False, False, False, True, -3, 2, -1, North
+13, 5, 4, 1, 1, 3, 1, 5, 1, 10, 5, False, False, False, True, -3, 0, -1, North
+13, 6, 4, 1, 1, 3, 1, 5, 1, 10, 5, False, False, False, True, -3, -1, -1, North
+12, 6, 4, 1, 1, 3, 1, 5, 1, 10, 6, False, False, False, True, -2, 0, -1, West
+12, 10, 4, 5, 6, 5, 12, 13, 6, 13, 12, True, True, True, True, 1, 2, 0, Stop
+12, 10, 4, 6, 6, 5, 11, 14, 6, 13, 12, True, True, True, True, 1, 2, -1, Stop
+12, 10, 4, 6, 6, 5, 12, 13, 6, 14, 12, True, True, True, True, 2, 2, -1, Stop
+12, 10, 4, 7, 6, 5, 13, 13, 6, 13, 12, True, True, True, True, 1, 2, -1, Stop
+12, 10, 4, 8, 6, 4, 13, 13, 6, 13, 11, True, True, True, True, 1, 1, -1, Stop
+13, 10, 4, 8, 5, 3, 13, 13, 6, 12, 11, True, True, True, True, -1, 1, -1, East
+14, 10, 4, 7, 5, 3, 12, 14, 6, 12, 12, True, True, True, True, 0, -4, -1, East
+15, 10, 4, 7, 6, 2, 12, 14, 6, 11, 12, True, True, True, True, -1, -4, -1, East
+15, 11, 4, 7, 7, 3, 12, 14, 7, 10, 12, True, True, True, True, -1, -4, -1, North
+15, 12, 4, 7, 6, 3, 11, 14, 8, 10, 13, True, True, True, True, -1, -4, -1, North
+15, 13, 4, 7, 6, 4, 11, 13, 8, 10, 14, True, True, True, True, -5, 1, -1, North
+14, 13, 4, 7, 5, 4, 11, 13, 9, 10, 13, True, True, True, True, -1, -4, -1, West
+13, 13, 4, 7, 4, 4, 11, 13, 8, 10, 14, True, True, True, True, -3, 1, -1, West
+12, 13, 4, 7, 4, 4, 11, 12, 8, 10, 14, True, True, True, True, -2, 1, -1, West
+11, 13, 4, 7, 3, 4, 12, 13, 8, 10, 14, True, True, True, True, -1, 1, -1, West
+10, 13, 4, 8, 3, 4, 12, 12, 8, 7, 1, True, True, True, False, -6, -1, 199, West
+9, 13, 4, 7, 3, 4, 12, 12, 8, 7, 1, True, True, True, False, -5, -1, -1, West
+8, 13, 4, 7, 3, 4, 11, 13, 8, 7, 1, True, True, True, False, -4, -2, -1, West
+7, 13, 4, 8, 3, 4, 12, 13, 9, 7, 1, True, True, True, False, -3, -1, -1, West
+6, 13, 4, 9, 3, 4, 13, 13, 8, 7, 1, True, True, True, False, -2, 0, -1, West
+5, 13, 4, 9, 3, 4, 14, 14, 8, 7, 1, True, True, True, False, -1, 1, -1, West
+5, 12, 4, 10, 3, 3, 14, 14, 8, 7, 1, True, True, True, False, -2, 2, -1, South
+5, 11, 4, 10, 4, 2, 14, 14, 9, 7, 1, True, True, True, False, -3, 3, -1, South
+5, 11, 4, 10, 3, 2, 13, 14, 10, 7, 1, True, True, True, False, -3, 2, -1, South
+5, 11, 4, 11, 3, 1, 13, 13, 10, 7, 1, True, True, True, False, -4, 2, -1, South
+4, 11, 4, 11, 3, 1, 14, 14, 10, 7, 1, True, True, True, False, -3, 3, -1, West
+3, 11, 4, 11, 4, 1, 14, 14, 9, 7, 1, True, True, True, False, -2, 3, -1, West
+2, 11, 4, 11, 5, 1, 13, 15, 9, 7, 1, True, True, True, False, -1, 2, -1, West
+2, 12, 4, 11, 4, 1, 14, 16, 9, 7, 1, True, True, True, False, -1, 2, -1, North
+2, 13, 4, 11, 3, 1, 14, 16, 10, 7, 1, True, True, True, False, -1, 1, -1, North
+2, 14, 4, 11, 3, 1, 13, 16, 11, 7, 1, True, True, True, False, -1, -1, -1, North
+2, 14, 4, 11, 4, 2, 13, 16, 12, 7, 1, True, True, True, False, 0, -1, -1, North
+1, 14, 4, 11, 3, 2, 14, 16, 11, 7, 1, True, True, True, False, 1, 0, -1, West
+1, 14, 4, 10, 3, 3, 14, 16, 10, 7, 1, True, True, True, False, 2, 0, -1, West
+1, 14, 4, 9, 3, 4, 14, 17, 10, 7, 1, True, True, True, False, 3, 0, -1, West
+2, 14, 4, 8, 3, 4, 14, 17, 11, 7, 1, True, True, True, False, 2, 0, -1, East
+3, 14, 4, 8, 3, 4, 13, 17, 10, 7, 1, True, True, True, False, 1, -1, -1, East
+4, 14, 4, 9, 3, 5, 13, 17, 10, 7, 1, True, True, True, False, 1, -1, -1, East
+5, 14, 4, 9, 3, 3, 1, 17, 11, 7, 1, True, False, True, False, 4, -11, 199, East
+6, 14, 4, 10, 3, 3, 1, 16, 11, 7, 1, True, False, True, False, 10, -3, -1, East
+7, 14, 4, 9, 3, 3, 1, 16, 11, 7, 1, True, False, True, False, 9, -3, -1, East
+7, 13, 4, 9, 4, 3, 1, 15, 11, 7, 1, True, False, True, False, 8, -2, -1, South
+7, 12, 4, 9, 3, 3, 1, 14, 11, 7, 1, True, False, True, False, 7, -1, -1, South
+7, 11, 4, 10, 3, 3, 1, 14, 11, 7, 1, True, False, True, False, 7, 0, -1, South
+7, 10, 4, 9, 3, 3, 1, 14, 12, 7, 1, True, False, True, False, 2, -7, -1, South
+7, 9, 4, 10, 3, 3, 1, 14, 13, 7, 1, True, False, True, False, 3, -6, -1, South
+8, 9, 4, 11, 3, 3, 1, 14, 13, 7, 1, True, False, True, False, 3, -6, -1, East
+9, 9, 4, 11, 4, 3, 1, 14, 12, 7, 1, True, False, True, False, 2, -5, -1, East
+10, 9, 4, 11, 5, 3, 1, 14, 11, 7, 1, True, False, True, False, 1, -4, -1, East
+11, 9, 4, 10, 5, 3, 1, 14, 10, 7, 1, True, False, True, False, 3, 1, -1, East
+12, 9, 4, 10, 6, 3, 1, 14, 11, 7, 1, True, False, True, False, 2, 2, -1, East
+12, 10, 4, 10, 6, 3, 1, 14, 11, 7, 1, True, False, True, False, 2, 1, -1, North
+12, 11, 4, 11, 6, 3, 1, 14, 11, 7, 1, True, False, True, False, 2, 0, -1, North
+13, 11, 4, 12, 6, 3, 1, 15, 11, 7, 1, True, False, True, False, 2, 0, -1, East
+14, 11, 4, 12, 5, 3, 1, 15, 10, 7, 1, True, False, True, False, 1, -1, -1, East
+15, 11, 4, 12, 4, 3, 1, 16, 10, 7, 1, True, False, True, False, 1, -1, -1, East
+16, 11, 4, 12, 3, 3, 1, 5, 1, 7, 1, True, False, False, False, -4, -8, 199, East
+17, 11, 4, 12, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -5, -7, -1, East
+17, 10, 4, 11, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -6, -1, South
+17, 9, 4, 11, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -4, -1, South
+16, 9, 4, 10, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -4, -1, West
+15, 9, 4, 9, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -4, -1, West
+14, 9, 4, 8, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -4, -1, West
+13, 9, 4, 7, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -6, -4, -1, West
+12, 9, 4, 8, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -4, -4, -1, West
+11, 9, 4, 8, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -3, -5, -1, West
+10, 9, 4, 8, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -2, -5, -1, West
+9, 9, 4, 8, 5, 3, 1, 5, 1, 7, 1, True, False, False, False, -1, -4, -1, West
+9, 8, 4, 8, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -1, -4, -1, South
+9, 7, 4, 8, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, -1, -3, -1, South
+9, 6, 4, 9, 4, 3, 1, 5, 1, 7, 1, True, False, False, False, 0, -2, -1, South
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, 0, Stop
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, -1, Stop
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, -1, Stop
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, -1, Stop
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, -1, Stop
+4, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 7, -5, -1, Stop
+5, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 6, -5, -1, East
+6, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 5, -5, -1, East
+7, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 4, -5, 99, East
+8, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 3, -5, 99, East
+9, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 2, -5, 99, East
+10, 12, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, -5, 99, East
+10, 11, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, -4, 99, South
+10, 10, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, -3, 99, South
+10, 9, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, -2, 99, South
+10, 8, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, -1, 99, South
+10, 7, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, 0, 99, South
+10, 6, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 1, 1, 99, South
+10, 5, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, -1, -2, 99, South
+9, 5, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 0, -2, -1, West
+10, 5, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, -1, -2, -1, East
+11, 5, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 0, 2, 99, East
+11, 6, 4, 9, 3, 11, 7, 19, 12, 22, 9, True, True, True, True, 0, 1, -1, North
+11, 7, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, -2, -4, 199, North
+11, 8, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, -2, -5, 99, North
+10, 8, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, -1, -5, -1, West
+9, 8, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 0, -5, -1, West
+8, 8, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, -5, -1, West
+8, 7, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, -4, -1, South
+8, 6, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, -3, 99, South
+8, 5, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, -2, -1, South
+8, 4, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, -1, -1, South
+8, 3, 4, 9, 3, 3, 1, 19, 12, 22, 9, True, False, True, True, 1, 0, 99, South
+9, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 10, 9, 199, East
+10, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 9, 9, 99, East
+11, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 8, 9, -1, East
+12, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 7, 9, -1, East
+13, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 6, 9, -1, East
+14, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 5, 9, -1, East
+15, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 4, 9, -1, East
+16, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 3, 9, -1, East
+17, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 2, 9, 99, East
+18, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 9, 99, East
+19, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 0, 9, 99, East
+20, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 2, 6, 99, East
+21, 3, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 6, -1, East
+21, 4, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 5, 99, North
+21, 5, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 4, 99, North
+21, 6, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 3, -1, North
+21, 7, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 2, 99, North
+21, 8, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 1, 1, 99, North
+22, 8, 4, 1, 1, 3, 1, 19, 12, 22, 9, False, False, True, True, 0, 1, 99, East
+22, 9, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -3, 3, 199, North
+22, 10, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -3, 2, 99, North
+22, 11, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -3, 1, 99, North
+22, 12, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -3, 0, -1, North
+22, 12, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -3, 0, -1, North
+21, 12, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -2, 0, -1, West
+20, 12, 4, 1, 1, 3, 1, 19, 12, 7, 1, False, False, True, False, -1, 0, 99, West

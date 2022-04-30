@@ -12,12 +12,16 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 
 
+from os import wait
+from turtle import delay
 import util
 from game import Agent
 from game import Directions
 from keyboardAgents import KeyboardAgent
 import inference
 import busters
+
+import time
 
 class NullGraphics:
     "Placeholder for graphics"
@@ -106,7 +110,7 @@ class BustersAgent:
 
     ##### Codigo extra - Funcion extra #####
 
-    # Posicion relativa del fantasma mas cer
+    # Funcion que encuentra el fantasma mas cercano
     def closer_ghost(self,gameState):
         # Obtenemos las distancias de los fantasmas.
         ghost_dist = gameState.data.ghostDistances
@@ -117,6 +121,16 @@ class BustersAgent:
         # Nos quedamos con la posicion del fantasma mas cercano.
         closer_ghost_pos = gameState.getGhostPositions()[closer_ghost]
 
+        return closer_ghost_pos
+
+
+
+
+    # Posicion relativa del fantasma mas cercano
+    def closer_ghost_relat_dist(self,gameState):
+
+        # Nos quedamos con la posicion del fantasma mas cercano.
+        closer_ghost_pos = self.closer_ghost(gameState)
         # Obtenemos la posicion de pacman.
         pacman_pos = gameState.getPacmanPosition()
 
@@ -126,6 +140,47 @@ class BustersAgent:
         return pos
 
 
+    def muro_x(self, gameState):
+
+        muro_x = False
+        pacman_x = gameState.getPacmanPosition()[0]
+        pacman_y = gameState.getPacmanPosition()[1]
+        fantasma_x = self.closer_ghost(gameState)[0]
+
+        for i in range(pacman_x,fantasma_x,-1 if (fantasma_x < pacman_x) else 1):
+            muro_x = gameState.getWalls()[i][pacman_y]
+
+            if muro_x:
+                return True
+
+        if not muro_x:
+            return False
+
+
+
+        #if not muro_x and not muro_y:
+        #   return False
+
+    def muro_y(self, gameState):
+
+        muro_y = False
+        pacman_x = gameState.getPacmanPosition()[0]
+        pacman_y = gameState.getPacmanPosition()[1]
+        fantasma_y = self.closer_ghost(gameState)[1]
+
+        for i in range(pacman_y,fantasma_y,-1 if (fantasma_y < pacman_y) else 1):
+            muro_y = gameState.getWalls()[pacman_x][i]
+
+            if muro_y:
+                return True
+
+        if not muro_y:
+            return False
+
+
+
+
+        
     # Guardamos en un fichero la informacion que consideramos importante.
     def printLineData(self, gameState, fichero, cabeceras, puntuacion_anterior):
         
@@ -147,12 +202,15 @@ class BustersAgent:
             fichero.write("\n@attribute fantasma_cercano_x numeric")
             fichero.write("\n@attribute fantasma_cercano_y numeric")
             # Anadido en la practica 1
+            fichero.write("\n@attribute muro_x {True,False}") 
+            fichero.write("\n@attribute muro_y {True,False}")
+            # Anadido en la practica 1
             fichero.write("\n@attribute dif_puntuacion numeric")
             fichero.write("\n@attribute direccion_pacman {West, Stop, East, North, South}\n")
 
             fichero.write("\n@data\n")
 
-        
+
         dif_puntuacion = int(gameState.getScore()) - int(puntuacion_anterior)
 
         data = ""
@@ -171,8 +229,11 @@ class BustersAgent:
         for i in range(1,len(gameState.getLivingGhosts())):
             data += ", " + str(gameState.getLivingGhosts()[i]) # Fantasma vivo
 
-        data += ", " + str(self.closer_ghost(gameState)[0]) # Fantasma mais cercano x   
-        data += ", " + str(self.closer_ghost(gameState)[1]) # Fantasma mais cercano y
+        data += ", " + str(self.closer_ghost_relat_dist(gameState)[0]) # Fantasma mais cercano x   
+        data += ", " + str(self.closer_ghost_relat_dist(gameState)[1]) # Fantasma mais cercano y
+
+        data += ", " + str(self.muro_x(gameState)) # Existencia de muro en el eje x
+        data += ", " + str(self.muro_y(gameState)) # Existencia de muro en el eje y
 
         data += ", " + str(dif_puntuacion) # Diferencia de puntacion entre el tick actual y pasado
 
@@ -357,7 +418,7 @@ class BasicAgentAA(BustersAgent):
         move = Directions.STOP
         legal = gameState.getLegalActions(0) ##Legal position from the pacman
 
-        position = self.closer_ghost(gameState)
+        position = self.closer_ghost_relat_dist(gameState)
         print("posicion fantasma",position)
         x = position[0]
         y = position[1]

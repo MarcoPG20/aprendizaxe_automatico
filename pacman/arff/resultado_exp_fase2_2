@@ -1,0 +1,25 @@
+Tester:     weka.experiment.PairedCorrectedTTester
+Analysing:  Percent_correct
+Datasets:   1
+Resultsets: 7
+Confidence: 0.05 (two tailed)
+Sorted by:  -
+Date:       28/4/22 10:25
+
+
+Dataset                   (1) trees.J4 | (2) lazy. (3) lazy. (4) lazy. (5) rules (6) rules (7) bayes
+----------------------------------------------------------------------------------------------------
+pacman.pract1-weka.filter(300)   65.22 |   74.57 v   66.06     59.91     65.55     27.91 *   41.75 *
+----------------------------------------------------------------------------------------------------
+                               (v/ /*) |   (1/0/0)   (0/1/0)   (0/1/0)   (0/1/0)   (0/0/1)   (0/0/1)
+
+
+Key:
+(1) trees.J48 '-C 0.25 -M 2' -217733168393644444
+(2) lazy.IBk '-K 1 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172
+(3) lazy.IBk '-K 3 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172
+(4) lazy.IBk '-K 5 -W 0 -A \"weka.core.neighboursearch.LinearNNSearch -A \\\"weka.core.EuclideanDistance -R first-last\\\"\"' -3080186098777067172
+(5) rules.PART '-M 2 -C 0.25 -Q 1' 8121455039782598361
+(6) rules.ZeroR '' 48055541465867954
+(7) bayes.NaiveBayes '' 5995231201785697655
+
